@@ -12,6 +12,7 @@ import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined
 import IconButton from "@mui/material/IconButton";
 import {Close} from "@mui/icons-material";
 import * as PropTypes from "prop-types";
+import {mask} from "../componente/mask";
 
 function CloseIcon(props) {
     return null;
@@ -37,14 +38,16 @@ function Login(props) {
     const [tipoMsg, setTipoMsg] = useState('')
 
     const handleChange = (e) => {
-        setCpf(e.target.value);
+        const {value} = e.target;
+        setCpf(mask(value));
     }
     const handleSenhaChange = (e) => {
         setSenha(e.target.value);
     }
 
     const handleSubmit = (e) => {
-        if (cpf == '45176048884' && senha == '1234') {
+        console.log(cpf);
+        if (cpf == '451.760.488-84' && senha == '1234') {
             setErro(false);
             setOpen(true);
             setTipoMsg("Verificação aprovada!")
@@ -74,7 +77,7 @@ function Login(props) {
                         <h1 style={{fontSize: "34px", fontWeight: "bold", textAlign: "left"}}>Faça seu login</h1>
                         <TextField label="CPF" required variant="filled" onChange={(e) => {
                             handleChange(e)
-                        }} error={erro}/>
+                        }} error={erro} value={cpf}/>
                         <TextField type={showPassword ? 'text' : 'password'}
                                    label="Senha" required variant="filled" onChange={(e) => {
                             handleSenhaChange(e)
