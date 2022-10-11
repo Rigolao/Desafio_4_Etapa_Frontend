@@ -2,10 +2,14 @@ import React from 'react';
 import Login from "./layout/Login";
 import {CssBaseline, ThemeProvider, useTheme} from "@mui/material";
 import theme from "./theme";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Perfil from "./layout/Perfil";
 import Card from "./componente/Card";
+import LandingPage from "./layout/LandingPage";
 import Cadastro from "./layout/Cadastro";
+import LoginPage from "./layout/Login"
+
+
 
 function App() {
 
@@ -13,9 +17,16 @@ function App() {
         <CssBaseline>
             <ThemeProvider theme={theme}>
                 <div className="App">
-                    <BrowserRouter>
-                        <Cadastro/>
-                    </BrowserRouter>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path='/'>
+                            <Route path='' element={<LandingPage/>} index />
+                            <Route path='cadastro' element={<Cadastro/>}/>
+                            <Route path='entrar' element={<LoginPage/>}/>
+                            <Route path='perfil' element={<Card/>} />
+                        </Route>
+                    </Routes>
+                </BrowserRouter> 
                 </div>
             </ThemeProvider>
         </CssBaseline>

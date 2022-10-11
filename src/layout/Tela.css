@@ -4,9 +4,10 @@
     gap: 1rem;
     width: 100%;
     box-sizing: border-box;
+    padding: 1rem 5rem;
 }
 .section{
-    padding: 5rem;
+    padding: 0rem 10rem;
 }
 .formulario{
     width: 100%;
@@ -45,6 +46,5 @@
     position: sticky;
     top: 0px;
     height: 100vh;
-    padding: 1rem;
 }
 

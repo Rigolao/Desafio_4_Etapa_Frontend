@@ -23,6 +23,7 @@ import { Close } from "@mui/icons-material";
 import * as PropTypes from "prop-types";
 import { mask } from "../componente/mask";
 import imagem from "../imagens/login.svg";
+import { useNavigate } from "react-router-dom";
 
 function CloseIcon(props) {
   return null;
@@ -38,6 +39,8 @@ function Login(props) {
   };
 
   const theme = useTheme();
+
+  const Navigate = useNavigate();
 
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
@@ -61,6 +64,7 @@ function Login(props) {
       setOpen(true);
       setTipoMsg("Verificação aprovada!");
       setTipoSeveridade("success");
+      Navigate("/perfil");
     } else {
       setErro(true);
       setOpen(true);
@@ -114,6 +118,7 @@ function Login(props) {
                 onChange={(e) => {
                   handleChange(e);
                 }}
+                inputProps={{ maxLength: 14 }}
                 error={erro}
                 value={cpf}
               />
@@ -161,8 +166,14 @@ function Login(props) {
               <Stack spacing={6}>
                 <Typography style={{ fontSize: "12px", textAlign: "left" }}>
                   <strong>Não tem uma conta? </strong>
-                  <Link variant="ancora">
-                    Cadastra-se <ArrowRightAltOutlinedIcon />
+                  <Link
+                    variant="ancora"
+                    onClick={() => {
+                      Navigate("/cadastro");
+                    }}
+                  >
+                    Cadastra-se
+                    <ArrowRightAltOutlinedIcon />
                   </Link>
                 </Typography>
               </Stack>
