@@ -126,14 +126,14 @@ function Login(props) {
 
 export const GridLayout = styled(Box)({
     display: "grid", [theme.breakpoints.up('md')]: {
-        gridTemplateColumns: "1fr 1fr",
+        gridTemplateColumns: "1.2fr 0.8fr",
     }, [theme.breakpoints.down('md')]: {
         gridTemplateColumns: "1fr",
-    }, gridTemplateRows: "1fr", width: "100%", height: "100vh", padding: "1rem"
+    }, gridTemplateRows: "1fr", width: "100%", height: "100vh", padding: "1rem", gap: "1rem"
 })
 
 export const LeftColor = styled(Box)({
-    backgroundColor: "#6C63FF", height: "100%", width: "100%", borderRadius: "20px",
+    backgroundColor: "linear-gradient(to top, rgb(108, 99, 255), rgb(47, 7, 67))", height: "100%", width: "100%", borderRadius: "20px",
 })
 
 export default Login;

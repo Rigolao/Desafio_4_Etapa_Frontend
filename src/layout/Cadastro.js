@@ -1,70 +1,61 @@
-import React from "react";
-import {Box, Button, Grid, Stack, TextField, Typography} from "@mui/material";
-import {GridLayout, LeftColor} from "./Login";
-import Center from "../componente/Center";
+import React from 'react';
+import "./Tela.css";
+import {Button, TextField} from "@mui/material";
 
-function Cadastro() {
+export default function Tela() {
     return (
-        <GridLayout>
-            <Grid xs={8} sx={{width: "468px"}}>
-                <Typography variant="h3">Dados pessoais</Typography>
-                <Typography color="#5C5959" fontSize="14px" fontWeight="semibold">Preencha os campos do(a) cientista que
-                    irá usar a plataforma</Typography>
-                <Stack
-                    direction="column"
-                    justifyContent="flex-start"
-                    spacing={2}
-                    sx={{
-                        marginTop: "20px"
-                    }}
-                >
-                    <Stack
-                        direction="row"
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        spacing={2}
-                    >
+        <main className="gridMain">
+            <section className="section">
+                <h1>Dados pessoais</h1>
+                <h3>Preencha os campos do(a) aluno(a) que irá usar a plataforma</h3>
+                <form className="formulario">
+                    <div className="input-duplo">
                         <TextField label="Nome" required/>
                         <TextField label="Sobrenome" required/>
-                    </Stack>
-                    <TextField label="E-mail" required/>
-                    <TextField label="Confirmar e-mail" required/>
-                    <TextField label="CPF" required/>
-                    <TextField label="Senha" required/>
-                    <TextField label="Confirmar senha" required/>
-                    <Stack
-                        direction="row"
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        spacing={2}
-                    >
+                    </div>
+                    <div className="input-single">
+                        <TextField label="Email" style={{width: "100%"}} required/>
+                    </div>
+                    <div className="input-single">
+                        <TextField label="Confirmar email" style={{width: "100%"}} required/>
+                    </div>
+                    <div className="input-single">
+                        <TextField label="CPF" style={{width: "100%"}} required/>
+                    </div>
+                    <div className="input-single">
+                        <TextField label="Senha" style={{width: "100%"}} required/>
+                    </div>
+                    <div className="input-single">
+                        <TextField label="Confirmar senha" style={{width: "100%"}} required/>
+                    </div>
+                    <div className="input-duplo">
                         <TextField label="Data de nascimento" required/>
                         <TextField label="Lattes ID" required/>
-                    </Stack>
-                    <TextField label="E-mail alternativo" required/>
-                </Stack>
-                <Stack
-                    sx={{
-                        marginTop: "20px"
-                    }}
-                    direction="row"
-                    justifyContent="space-between">
-                <Button sx={{
-                    width: "138px",
-                    height: "55px"
-                }}
-                        variant="outlined">Voltar</Button>
-                <Button sx={{
-                    backgroundColor: "#6C63FF",
-                    width: "208px",
-                    height: "55px"}}
-                        variant="contained">Entrar</Button>
-                </Stack>
-            </Grid>
-            <Center>
-                <LeftColor/>
-            </Center>
-        </GridLayout>);
-}
+                    </div>
+                    <div className="input-single">
+                        <TextField label="E-mail alternativo" style={{width: "100%"}}/>
+                    </div>
+                    <div className="botao-row">
+                        <Button sx={{
+                            width: "138px",
+                            height: "55px"
+                        }}
+                                variant="outlined">Voltar</Button>
+                        <Button sx={{
+                            backgroundColor: "#6C63FF",
+                            width: "208px",
+                            height: "55px"
+                        }}
+                                variant="contained">Entrar</Button>
+                    </div>
 
-export default Cadastro;
+                </form>
+            </section>
+            <aside className="aside">
+                <div className="background">
+                    <img src="../imagens/cadastro.svg"/>
+                </div>
+            </aside>
+        </main>
+    );
+}
