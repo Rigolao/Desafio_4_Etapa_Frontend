@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Button, Grid, Stack, TextField, Typography} from "@mui/material";
-import {GridLayout, LeftColor} from "./Formulario";
-import Center from "./Center";
+import {GridLayout, LeftColor} from "./Login";
+import Center from "../componente/Center";
 
 function Cadastro() {
     return (

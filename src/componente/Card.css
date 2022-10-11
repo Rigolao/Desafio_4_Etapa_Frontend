@@ -1,0 +1,21 @@
+.Card {
+    display: flex;
+    width: 435px;
+    height: 280px;
+    border-radius: 8px;
+    border: 1px solid #f1f1f1;
+    background: gray;
+    justify-content: center;
+    align-items: center;
+}
+
+.Card-foto{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: tomato;
+}
+
+.Card-titulo {
+    text-align: center;
+}

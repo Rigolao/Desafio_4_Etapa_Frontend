@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import {Box, InputAdornment, Link, Stack, styled, Typography, useTheme} from "@mui/material";
 import {Button, TextField} from "@mui/material";
-import Center from "./Center";
+import Center from "../componente/Center";
 import theme from "../theme";
 import useViewport from "../hooks/useViewport";
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 
-function Formulario() {
+function Login(props) {
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -17,6 +17,27 @@ function Formulario() {
     }
 
     const theme = useTheme();
+
+    const [cpf, setCpf] = useState("");
+    const [senha, setSenha] = useState("");
+
+    function mudaCpf (e) {
+        setCpf(e.target.value);
+        console.log(e.target.value);
+    }
+
+    function mudaSenha (e) {
+        setSenha(e.target.value);
+    }
+
+    function login(){
+        if(cpf == 45176048884 && senha == 1234){
+            return <span>Valido</span>
+        }
+        else{
+            return <span>Falso</span>
+        }
+    }
 
     return (
         <GridLayout>
@@ -37,9 +58,9 @@ function Formulario() {
                     <form method="post">
                         <Stack spacing={2}>
                             <h1 style={{fontSize: "34px", fontWeight: "bold", textAlign: "left"}}>Faça seu login</h1>
-                            <TextField  label="CPF" required variant="filled"/>
+                            <TextField  label="CPF" required variant="filled" onChange={mudaCpf}/>
                             <TextField type={showPassword ? 'text' : 'password'}
-                                       label="Senha" required variant="filled"
+                                       label="Senha" required variant="filled"  onChange={mudaSenha}
                                        InputProps={{
                                            endAdornment: (
                                                <InputAdornment position="end" onClick={handleClick}>
@@ -52,7 +73,7 @@ function Formulario() {
                                        }}/>
                             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                                 <Button sx={{backgroundColor: "#6C63FF", widht: "100px", height: "55px"}}
-                                        variant="contained">Entrar</Button>
+                                        variant="contained" onSubmit={login}>Entrar</Button>
                                 <Link variant="ancora">Esqueci minha senha</Link>
                             </Stack>
                             <Stack spacing={6}>
@@ -88,4 +109,4 @@ export const LeftColor = styled(Box)({
     borderRadius: "20px",
 })
 
-export default Formulario;
+export default Login;
