@@ -98,8 +98,8 @@ function Login(props) {
                         </Stack>
                         <Stack spacing={6}>
                             <Typography style={{fontSize: "12px", textAlign: "left"}}><strong>Não tem uma
-                                conta? </strong><Link
-                                variant="ancora">Cadastra-se <ArrowRightAltOutlinedIcon/></Link></Typography>
+                                conta? </strong><Link to="cadastro"
+                                variant="ancora">Cadastre-se <ArrowRightAltOutlinedIcon/></Link></Typography>
                         </Stack>
                         <Collapse in={open}>
                             <Alert severity={tipoSeveridade} action={

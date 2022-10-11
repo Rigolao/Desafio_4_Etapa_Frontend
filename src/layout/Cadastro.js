@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Tela.css";
 import {Button, TextField} from "@mui/material";
+import SvgCadastro from "../imagens/cadastro.svg"
 
 export default function Cadastro() {
     return (
@@ -53,7 +54,7 @@ export default function Cadastro() {
             </section>
             <aside className="aside">
                 <div className="background">
-                    <img src="../imagens/cadastro.svg"/>
+                    <img src={SvgCadastro}/>
                 </div>
             </aside>
         </main>
