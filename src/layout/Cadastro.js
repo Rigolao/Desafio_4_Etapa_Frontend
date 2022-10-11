@@ -2,7 +2,7 @@ import React from 'react';
 import "./Tela.css";
 import {Button, TextField} from "@mui/material";
 
-export default function Tela() {
+export default function Cadastro() {
     return (
         <main className="gridMain">
             <section className="section">

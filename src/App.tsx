@@ -5,7 +5,7 @@ import theme from "./theme";
 import {BrowserRouter} from "react-router-dom";
 import Perfil from "./layout/Perfil";
 import Card from "./componente/Card";
-import Tela from "./layout/Tela";
+import Cadastro from "./layout/Cadastro";
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
             <ThemeProvider theme={theme}>
                 <div className="App">
                     <BrowserRouter>
-                        <Tela/>
+                        <Cadastro/>
                     </BrowserRouter>
                 </div>
             </ThemeProvider>
