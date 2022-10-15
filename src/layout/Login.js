@@ -22,7 +22,7 @@ import IconButton from "@mui/material/IconButton";
 import { Close } from "@mui/icons-material";
 import * as PropTypes from "prop-types";
 import { mask } from "../componente/mask";
-import imagem from "../imagens/login.svg";
+import imagem from "../imagens/planeta.svg";
 import { useNavigate } from "react-router-dom";
 
 function CloseIcon(props) {
@@ -80,7 +80,7 @@ function Login(props) {
         <Center>
           <LeftColor>
             <Center>
-              <img src={imagem} style={{ width: "80%", height: "auto" }} />
+              <img src={imagem} style={{ width: "50%", height: "auto" }} />
             </Center>
           </LeftColor>
         </Center>

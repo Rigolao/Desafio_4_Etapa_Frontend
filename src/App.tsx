@@ -3,11 +3,9 @@ import Login from "./layout/Login";
 import {CssBaseline, ThemeProvider, useTheme} from "@mui/material";
 import theme from "./theme";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Perfil from "./layout/Perfil";
-import Card from "./componente/Card";
 import LandingPage from "./layout/LandingPage";
 import Cadastro from "./layout/Cadastro";
-import LoginPage from "./layout/Login"
+import Perfil from "./componente/MenuLateral";
 
 
 
@@ -17,13 +15,14 @@ function App() {
         <CssBaseline>
             <ThemeProvider theme={theme}>
                 <div className="App">
+
                 <BrowserRouter>
                     <Routes>
                         <Route path='/'>
                             <Route path='' element={<LandingPage/>} index />
                             <Route path='cadastro' element={<Cadastro/>}/>
-                            <Route path='entrar' element={<LoginPage/>}/>
-                            <Route path='perfil' element={<Card/>} />
+                            <Route path='entrar' element={<Login/>}/>
+                            <Route path='perfil' element={<Perfil/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter> 
