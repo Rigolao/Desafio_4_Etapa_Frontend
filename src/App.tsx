@@ -16,7 +16,7 @@ function App() {
             <ThemeProvider theme={theme}>
                 <div className="App">
 
-                <BrowserRouter>
+                <BrowserRouter basename={process.env.PUBLIC_URL}>
                     <Routes>
                         <Route path='/'>
                             <Route path='' element={<LandingPage/>} index />
