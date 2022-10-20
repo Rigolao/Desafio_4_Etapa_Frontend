@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import Login from "./pages/Login";
+import { CssBaseline, ThemeProvider, useTheme } from "@mui/material";
+import theme from "./theme";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import Cadastro from "./pages/Cadastro";
+import Perfil from "./componentes/MenuLateral";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CssBaseline>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/">
+                <Route path="" element={<LandingPage />} index />
+                <Route path="cadastro" element={<Cadastro />} />
+                <Route path="entrar" element={<Login />} />
+                <Route path="perfil" element={<Perfil />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </ThemeProvider>
+    </CssBaseline>
   );
 }
 

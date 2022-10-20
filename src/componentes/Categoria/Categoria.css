@@ -1,0 +1,23 @@
+.categoriasFundo {
+  display: flex;
+  background-color: #E6E7FF;
+  padding-top: 2.7%;
+  padding-bottom: 2.7%;
+
+}
+
+.categoriasPassagem{
+  background-color: #E6E7FF;
+  color: rgb(0, 0, 0);
+  list-style-type: none;
+  overflow: hidden;
+  margin-left: 20%;
+  display: flex;
+}
+
+
+.categoriasPassagem li{
+  text-align: center;
+  padding: 0px 30px 0px 10px;
+     
+}
