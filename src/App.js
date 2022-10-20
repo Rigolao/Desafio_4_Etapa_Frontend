@@ -6,7 +6,7 @@ import theme from "./theme";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Cadastro from "./pages/Cadastro";
-import Perfil from "./componentes/MenuLateral";
+import Card from "./componentes/Card";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
                 <Route path="" element={<LandingPage />} index />
                 <Route path="cadastro" element={<Cadastro />} />
                 <Route path="entrar" element={<Login />} />
-                <Route path="perfil" element={<Perfil />} />
+                <Route path="perfil" element={<Card />} />
               </Route>
             </Routes>
           </BrowserRouter>
