@@ -1,42 +1,68 @@
-.card-container{
+body{
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-} 
-.card{
-  width: 300px;
 }
 
-.card-avatar{
+.card-container{
+  width: 360px;
+  height: 400px;
+  background: #f2f2f2;
+  border-radius: 20px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+.card-container Button{
+  margin-top: 15px;
+}
+.card-top{
+  height: 90px;
+  border-radius: 20px 20px 0 0;
+  background-color: #6a5acd;
   display: flex;
   justify-content: center;
+}
+.card-imagem-bg{
+  background-color: #fff;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-top: 40px;
+  overflow: hidden;
 
 }
-.card-avatar img{
+.card-imagem-bg img{
+  background-color: #fff;
+  width: 100px;
+  padding: 5px;
+  height: 100px;
   border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  margin: -40px;
 }
-.card-conteudo p {
+
+.card-bottom {
   text-align: center;
+  margin-top: 60px;
 }
-.card-conteudo h4{
-  padding: 40px 0 0 0 ;
+.card-bottom p {
+  font-size: 12px;
 }
-.card-conteudo Button{
- float: right;
- margin: 10px;
+
+.card-info-container{
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px 30px 20px;
 }
-.card-bg{
-  background-color: aqua;
-  height: 130px;
-  width: 300px;
-  border-radius: 20px 20px 0 0 ;
+.card-info{
+  display: flex;
+  flex-direction: column;
+}
+.card-info h4{
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+}
+.card-info span{
+  font-size: 12px;
+  font-weight: bold;
+  font-style: italic;
+  color:rgba(0, 0, 0, 0.5) ;
 }
