@@ -6,7 +6,7 @@ import theme from "./theme";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Cadastro from "./pages/Cadastro";
-import Card from "./componentes/Card";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -19,7 +19,11 @@ function App() {
                 <Route path="" element={<LandingPage />} index />
                 <Route path="cadastro" element={<Cadastro />} />
                 <Route path="entrar" element={<Login />} />
-                <Route path="perfil" element={<Card />} />
+                <Route path="perfil" element={<Dashboard />} >
+                  <Route path="inicial" element={<h1>Pagina Inicial</h1>} />
+                  <Route path="projetos" element={<h1>Projetos</h1>} />
+                  <Route path="perfil" element={<h1>Perfil</h1>} />
+                </Route>
               </Route>
             </Routes>
           </BrowserRouter>

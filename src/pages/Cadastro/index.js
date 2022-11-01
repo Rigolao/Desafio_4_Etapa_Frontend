@@ -39,7 +39,7 @@ export default function Cadastro() {
             />
           </div>
           <div className="input-duplo">
-            <TextField label="Data de nascimento" required />
+            <TextField label="Data de nascimento" type="date" required />
             <TextField label="Lattes ID" required />
           </div>
           <div className="input-single">

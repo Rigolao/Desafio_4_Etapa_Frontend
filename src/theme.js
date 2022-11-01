@@ -19,8 +19,35 @@ export default theme = createTheme({
             textDecoration: "none",
           },
         },
+        {
+          props: { variant: "nav-link" },
+          style: {
+            color: "#000000",
+            textDecoration: "none",
+          },
+        },
       ],
     },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          "&.Mui-selected": {
+            backgroundColor: "#E9E9E9",
+            "&:hover": {
+              backgroundColor: "#E9E9E9"
+            }
+          },
+        },
+      },
+    }
+  },
+  palette: {
+    primary: {
+      main: "#6C63FF"
+    },
+    secondary: {
+      main: "#FFF"
+    }
   },
   breakpoints: {
     values: {

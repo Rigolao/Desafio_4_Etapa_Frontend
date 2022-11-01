@@ -1,14 +1,10 @@
 
 .gridMain{
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 1rem 5rem;
+ display: flex;
 }
 .section{
-  padding: 0rem 10rem;
+  padding: 0 40px 40px 40px;
+  flex: 1;
 }
 .formulario{
   width: 100%;
@@ -44,6 +40,8 @@
 
 }
 .aside{
+  flex: 0.8;
+  padding: 20px;
   position: sticky;
   top: 0px;
   height: 100vh;
