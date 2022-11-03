@@ -57,7 +57,7 @@ export default (props) => {
                         <List component="nav">
 
                             <LinkMUI component={Link} to="inicial" variant={"nav-link"} >
-                                <ListItemButton selected={location == "/perfil/inicial"}>
+                                <ListItemButton selected={location === "/perfil/inicial"}>
                                     <ListItemIcon>
                                         <HomeIcon/>
                                     </ListItemIcon>
@@ -66,7 +66,7 @@ export default (props) => {
                             </LinkMUI>
 
                             <LinkMUI component={Link} to="projetos" variant={"nav-link"}>
-                                <ListItemButton selected={location == "/perfil/projetos"}>
+                                <ListItemButton selected={location === "/perfil/projetos"}>
                                     <ListItemIcon>
                                         <FolderIcon/>
                                     </ListItemIcon>
@@ -75,7 +75,7 @@ export default (props) => {
                             </LinkMUI>
 
                             <LinkMUI component={Link} to="/perfil" variant={"nav-link"}>
-                                <ListItemButton selected={location == "/perfil"}>
+                                <ListItemButton selected={location === "/perfil"}>
                                     <ListItemIcon>
                                         <AvatarIcon/>
                                     </ListItemIcon>
