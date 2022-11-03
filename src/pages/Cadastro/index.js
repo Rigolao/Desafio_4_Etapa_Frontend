@@ -1,12 +1,14 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Cadastro.css";
 import imagem from "../../imagens/cadastro.svg";
 import Center from "../../componentes/Center";
-import {Button, TextField} from "@mui/material";
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import {Box, Button, CircularProgress, Stack, TextField} from "@mui/material";
+import ButtonLoading from "../../componentes/ButtonLoading";
 
 
 export default function Cadastro() {
+    const [loading, setLoading] = useState(false);
+
     const [form, setForm] = useState(
         {
             nome: '',
@@ -18,6 +20,7 @@ export default function Cadastro() {
             confirmarSenha: '',
             dataNascimento: ''
         });
+
     const [error, setError] = useState(
         {
             nome: false,
@@ -31,36 +34,31 @@ export default function Cadastro() {
         }
     );
 
-    const  aoSalvar = (e) => {
+    useEffect(() => {
+        console.log(error)
+    }, [error])
+
+    const aoSalvar = (e) => {
         e.preventDefault();
 
         var regexText = /[^a-zà-ú]/gi; //regex de validacao de campo type text
         var regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g // regex de valicao de campo type email
-        console.log(regexText.test(form.nome) || form.nome.length<2)
-        if(regexText.test(form.nome) || form.nome.length<2 || !form.nome){
-            setError({nome: true});
-        }
-        console.log({...error, nome: true})
-
-        console.log(!regexEmail.test(form.email))
-        if(!regexEmail.test(form.email)){ //se nao for um email valido
-            setError({...error, email: true})
-        }
-        console.log({...error, email: true})
-        if(form.email != form.confirmarEmail){
-            setError({...error, confirmarEmail: true})
-        }
-        console.log(!form.cpf)
-        if(!form.cpf || form.cpf.length == 14) {
-            setError({...error, cpf: true})
-        }
-        console.log(form.senha != form.confirmarSenha)
-        if(form.senha != form.confirmarSenha){
-            setError({...error, confirmarSenha: true})
-        }
-        console.log(form)
 
 
+        if (regexText.test(form.nome) || form.nome.length < 2 || !form.nome) {
+            console.log("error nome: " + error.nome)
+            setError((prevState) => ({...prevState, nome: true}));
+        }
+        if (!regexEmail.test(form.email)) { //se nao for um email valido
+            setError((prevState) => ({...prevState, email: true}));
+            console.log(error)
+        }
+        if (form.email !== form.confirmarEmail) {
+            setError((prevState) => ({...prevState, confirmarEmail: true}));
+        }
+        if (form.senha !== form.confirmarSenha) {
+            setError((prevState) => ({...prevState, confirmarSenha: true}));
+        }
 
         setForm({
             nome: '',
@@ -80,78 +78,105 @@ export default function Cadastro() {
                 <h1>Dados pessoais</h1>
                 <h3>Preencha os campos do(a) aluno(a) que irá usar a plataforma</h3>
                 <form onSubmit={aoSalvar}>
-                    <TextField
-                        fullWidth
-                        label="Nome"
-                        value={form.nome}
-                        onChange={(e) => setForm({nome: e.target.value})}
-                        variant='filled'
-                        error={error.nome}
-                        helperText={ error.nome ? "Tente": ""}
-                    />
-                    <TextField
-                        label="Sobrenome"
-                        value={form.sobrenome}
-                        onChange={(e) => setForm({...form, sobrenome: e.target.value})}
-                        variant='filled'
-                        error={error.sobrenome}
-                    />
-                    <TextField
-                        label="E-mail"
-                        value={form.email}
-                        onChange={(e) => setForm({...form, email: e.target.value})}
-                        variant='filled'
-                        error={error.email}
-                    />
-                    <TextField
-                        label="Confirmar e-mail"
-                        value={form.confirmarEmail}
-                        onChange={(e) => setForm({...form, confirmarEmail: e.target.value})}
-                        variant='filled'
-                        error={error.confirmarEmail}
-                    />
-                    <TextField
-                        label="CPF"
-                        value={form.cpf}
-                        onChange={(e) => setForm({...form, cpf: e.target.value})}
-                        variant='filled'
-                        error={error.cpf}
-                    />
-                    <TextField
-                        label="Senha"
-                        value={form.senha}
-                        onChange={(e) => setForm({...form, senha: e.target.value})}
-                        variant='filled'
-                        error={error.senha}
-                    />
-                    <TextField
-                        label="Confirmar senha"
-                        value={form.confirmarSenha}
-                        onChange={(e) => setForm({...form, confirmarSenha: e.target.value})}
-                        variant='filled'
-                        error={error.confirmarSenha}
-                    />
-                    <TextField
-                        label="Data de Nascimento"
-                        value={form.dataNascimento}
-                        onChange={(e) => setForm({...form, dataNascimento: e.target.value})}
-                        variant='filled'
-                        type='date'
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        error={error.dataNascimento}
-                    />
-                    <Button type="submit">Enviar</Button>
+                    <Stack
+                        spacing={2}
+                    >
+                        <Stack
+                            direction={{sm: 'column', md: 'row'}}
+                            spacing={{xs: 2, sm: 2, md: 2}}
+                        >
+                            <TextField
+                                fullWidth
+                                label="Nome"
+                                type="text"
+                                value={form.nome}
+                                onChange={(e) => setForm({...form, nome: e.target.value})}
+                                variant='filled'
+                                error={error.nome}
+                                helperText={error.nome ? "Psiu, insira um nome válido" : ""}
+                            />
+                            <TextField
+                                fullWidth
+                                label="Sobrenome"
+                                type="text"
+                                value={form.sobrenome}
+                                onChange={(e) => setForm({...form, sobrenome: e.target.value})}
+                                variant='filled'
+                                error={error.sobrenome}
+                            />
+                        </Stack>
+                        <TextField
+                            label="E-mail"
+                            type="text"
+                            value={form.email}
+                            onChange={(e) => setForm({...form, email: e.target.value})}
+                            variant='filled'
+                            error={error.email}
+                        />
+                        <TextField
+                            label="Confirmar e-mail"
+                            type="text"
+                            value={form.confirmarEmail}
+                            onChange={(e) => setForm({...form, confirmarEmail: e.target.value})}
+                            variant='filled'
+                            error={error.confirmarEmail}
+                        />
+                        <TextField
+                            label="CPF"
+                            value={form.cpf}
+                            onChange={(e) => setForm({...form, cpf: e.target.value})}
+                            variant='filled'
+                            error={error.cpf}
+                            inputProps={{ maxLength: 14 }}
+
+                        />
+                        <TextField
+                            label="Senha"
+                            type='password'
+                            value={form.senha}
+                            onChange={(e) => setForm({...form, senha: e.target.value})}
+                            variant='filled'
+                            error={error.senha}
+                        />
+                        <TextField
+                            label="Confirmar senha"
+                            type='password'
+                            value={form.confirmarSenha}
+                            onChange={(e) => setForm({...form, confirmarSenha: e.target.value})}
+                            variant='filled'
+                            error={error.confirmarSenha}
+                        />
+                        <TextField
+                            label="Data de Nascimento"
+                            value={form.dataNascimento}
+                            onChange={(e) => setForm({...form, dataNascimento: e.target.value})}
+                            variant='filled'
+                            type='date'
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            error={error.dataNascimento}
+                        />
+                        <Stack
+                            sx={{position: 'relative'}}
+                            direction={{sm: 'column', md: 'row'}}
+                            spacing={{xs: 1, sm: 2}}
+                            justifyContent="space-between"
+                        >
+                            <Button variant="outlined"> Voltar</Button>
+                            <ButtonLoading type='submit' variant='contained' label="Cadastro" loading={loading}/>
+                        </Stack>
+                    </Stack>
                 </form>
             </section>
-            <aside className="aside">
+            <Box className="aside" display={{xs: 'none', sm: 'none', md: 'block'}}>
                 <div className="background">
                     <Center>
-                        <img src={imagem} style={{width: "80%", height: "auto"}}/>
+                        <img src={imagem} style={{width: "80%", height: "auto"}}
+                             alt="Ilustração de um personagem caminhando"/>
                     </Center>
                 </div>
-            </aside>
+            </Box>
         </main>
     );
 }

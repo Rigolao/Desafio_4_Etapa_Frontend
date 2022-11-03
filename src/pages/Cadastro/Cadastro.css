@@ -7,19 +7,19 @@
   position: relative;
   flex: 1;
 }
-.cadastro-container form{
-  position: absolute;
-  display: flex;
-  width: 85%;
-  padding-left: 20px;
-  gap: 10px;
-  justify-content: center;
-  flex-direction: column;
-}
-.cadastro-container input{
-  display: flex;
-  flex-direction: row;
-}
+/*.cadastro-container form{*/
+/*  position: absolute;*/
+/*  display: flex;*/
+/*  width: 85%;*/
+/*  padding-left: 20px;*/
+/*  gap: 10px;*/
+/*  justify-content: center;*/
+/*  flex-direction: column;*/
+/*}*/
+/*.cadastro-container input{*/
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*}*/
 .background{
   background: linear-gradient(to top, rgb(108, 99, 255), rgb(108, 60, 167));
   position: relative;
