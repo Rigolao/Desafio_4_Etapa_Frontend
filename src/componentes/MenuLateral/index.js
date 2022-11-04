@@ -21,16 +21,20 @@ import AvatarIcon from "@mui/icons-material/AccountCircle";
 import {Link, useLocation} from 'react-router-dom';
 import {Link as LinkMUI} from '@mui/material';
 
+
 export default (props) => {
     const theme = useTheme();
     const smDown = useMediaQuery(theme.breakpoints.down("sm")); //Se eu entrar na condição menor que x tamnho retorna true
 
     const location = useLocation().pathname;
-    console.log(location)
 
     return (
         <>
-            <Drawer open={true} variant={smDown ? "temporary" : "permanent"}>
+            <Drawer
+                open={props.open}
+                variant={smDown ? "temporary" : "permanent"}
+                onClose={props.close}
+            >
                 <Box
                     width={theme.spacing(28)}
                     height="100%"
@@ -74,7 +78,7 @@ export default (props) => {
                                 </ListItemButton>
                             </LinkMUI>
 
-                            <LinkMUI component={Link} to="/perfil" variant={"nav-link"}>
+                            <LinkMUI component={Link} to="perfil" variant={"nav-link"}>
                                 <ListItemButton selected={location === "/perfil"}>
                                     <ListItemIcon>
                                         <AvatarIcon/>
@@ -86,7 +90,9 @@ export default (props) => {
                     </Box>
                 </Box>
             </Drawer>
-            {props.children}
+            <Box marginLeft={smDown ? 0: theme.spacing(28)}>
+                {props.children}
+            </Box>
         </>
     );
 };
