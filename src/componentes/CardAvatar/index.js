@@ -1,35 +1,57 @@
-import { Button } from "@mui/material";
 import React from "react";
 import "./CardAvatar.css";
+import {Avatar, Paper, Stack, Typography} from "@mui/material";
+import LattesIcon from '../../imagens/lattes.svg'
+import IconButton from "@mui/material/IconButton";
 
 const CardAvatar = (props) => {
   return (
-    <div className="card-container">
-      <div className="card-top">
-        <div className="card-imagem-bg">
-          <img src="https://github.com/JoaaoM.png" />
-        </div>
-      </div>
+      <Stack
+          maxWidth="230px"
+          height="300px"
+      >
+        <Stack
+            direction='column'
+            justifyContent='center'
+            alignItems='center'
+            component={Paper}
+            elevation={2}
+            sx={{backgroundColor: '#F2F2F2'}}
+        >
+          <Avatar
+              sx={{height: '100px', width: '100px', margin: '10px'}}
+          >JM</Avatar>
+          <Stack
 
-      <div className="card-bottom">
-        <h3>João Marques</h3>
-        <div className="card-info-container">
-          <div className="card-info">
-            <h4>Desenvolvedor</h4>
-            <span>Area Atuação</span>
-          </div>
-          <div className="card-info">
-            <h4>Desenvolvedor</h4>
-            <span>Area Formação</span>
-          </div>
-        </div>
-        <p>
-          Minhas habilidades são em front end, trabalhando com frameworks como
-          React, PrimeFaces
-        </p>
-        <Button variant="outlined">Perfil</Button>
-      </div>
-    </div>
+          >
+            <Typography
+                color='#4136F1'
+                fontWeight='bold'
+            >
+              João Marques
+            </Typography>
+
+            <Typography
+                fontSize={12}
+                color='#595959'
+            >
+              Engenharia de Software
+            </Typography>
+          </Stack>
+
+          <Stack
+              direction='row'
+              marginBottom='10px'
+          >
+            <IconButton>
+              <img src={LattesIcon} alt='icone lattes'/>
+            </IconButton>
+          </Stack>
+        </Stack>
+        <Typography>Tags: #Matemática, #Biologia
+          #Matemática, #Biologia
+        </Typography>
+      </Stack>
   );
 };
 export default CardAvatar;

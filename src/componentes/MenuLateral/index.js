@@ -5,8 +5,7 @@ import {
     Box,
     Divider,
     Drawer,
-    Grid,
-    Icon,
+    Link as LinkMUI,
     List,
     ListItemButton,
     ListItemIcon,
@@ -14,12 +13,10 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material";
-import Imagem from "../../imagens/cientista.svg";
 import HomeIcon from "@mui/icons-material/Home";
 import FolderIcon from "@mui/icons-material/Folder";
 import AvatarIcon from "@mui/icons-material/AccountCircle";
 import {Link, useLocation} from 'react-router-dom';
-import {Link as LinkMUI} from '@mui/material';
 
 
 export default (props) => {
@@ -45,14 +42,15 @@ export default (props) => {
                         width="100%"
                         height={theme.spacing(20)}
                         display="flex"
+                        flexDirection='column'
                         alignItems="center"
                         justifyContent="center"
                     >
                         <Avatar
                             component={Link} to="/perfil"
-                            sx={{height: theme.spacing(12), width: theme.spacing(12)}}
-                            src={Imagem}
-                        />
+                            sx={{height: theme.spacing(12), width: theme.spacing(12), marginTop: theme.spacing(2)}}
+                        >JM</Avatar>
+                        <h4>João Marques</h4>
                     </Box>
 
                     <Divider/>
@@ -61,7 +59,7 @@ export default (props) => {
                         <List component="nav">
 
                             <LinkMUI component={Link} to="inicial" variant={"nav-link"} >
-                                <ListItemButton selected={location === "/perfil/inicial"}>
+                                <ListItemButton selected={location === "/dashboard/inicial"}>
                                     <ListItemIcon>
                                         <HomeIcon/>
                                     </ListItemIcon>
@@ -70,7 +68,7 @@ export default (props) => {
                             </LinkMUI>
 
                             <LinkMUI component={Link} to="projetos" variant={"nav-link"}>
-                                <ListItemButton selected={location === "/perfil/projetos"}>
+                                <ListItemButton selected={location === "/dashboard/projetos"}>
                                     <ListItemIcon>
                                         <FolderIcon/>
                                     </ListItemIcon>
@@ -79,7 +77,7 @@ export default (props) => {
                             </LinkMUI>
 
                             <LinkMUI component={Link} to="perfil" variant={"nav-link"}>
-                                <ListItemButton selected={location === "/perfil"}>
+                                <ListItemButton selected={location === "/dashboard/perfil"}>
                                     <ListItemIcon>
                                         <AvatarIcon/>
                                     </ListItemIcon>
@@ -90,7 +88,7 @@ export default (props) => {
                     </Box>
                 </Box>
             </Drawer>
-            <Box marginLeft={smDown ? 0: theme.spacing(28)}>
+            <Box height='100vh' marginLeft={smDown ? 0: theme.spacing(28)}>
                 {props.children}
             </Box>
         </>

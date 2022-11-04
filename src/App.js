@@ -8,12 +8,14 @@ import LandingPage from "./pages/LandingPage";
 import Cadastro from "./pages/Cadastro";
 import Dashboard from "./pages/Dashboard";
 import Perfil from "./pages/Perfil";
+import PaginaInicial from "./pages/PaginaInicial";
+import Projetos from "./pages/Projetos";
 
 function App() {
   return (
     <CssBaseline>
       <ThemeProvider theme={theme}>
-        <div className="App">
+        <div className="App" style={{width: "100vw",height: '100vh',overflowX: 'hidden'}}>
           <BrowserRouter>
             <Routes>
               <Route path="/">
@@ -21,8 +23,8 @@ function App() {
                 <Route path="cadastro" element={<Cadastro />} />
                 <Route path="entrar" element={<Login />} />
                 <Route path="dashboard" element={<Dashboard />} >
-                  <Route path="inicial" element={<h1>Pagina Inicial</h1>} />
-                  <Route path="projetos" element={<h1>Projetos</h1>} />
+                  <Route path="inicial" element={<PaginaInicial/>} />
+                  <Route path="projetos" element={<Projetos/>} />
                   <Route path="perfil" element={<Perfil/>} />
                 </Route>
               </Route>
