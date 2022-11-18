@@ -4,80 +4,47 @@ import imagem from "../../imagens/cadastro.svg";
 import Center from "../../componentes/Center";
 import {Box, Button, CircularProgress, Stack, TextField} from "@mui/material";
 import ButtonLoading from "../../componentes/ButtonLoading";
+import * as yup from "yup";
+import {useFormik} from "formik";
 
+
+
+const validationSchema = yup.object({
+    nome: yup.string().required("Esse campo é obrigatório").min(2, "Nome inválido"),
+    sobrenome: yup.string().required("Esse campo é obrigatório").min(2, "Sobrenome inválido"),
+    email: yup.string().required("Esse campo é obrigatório"),
+    confirmarEmail: yup.string().required("Esse campo é obrigatório"),
+    cpf: yup.string().min(14, "CPF inválido"),
+    senha: yup.string().required() ,
+    confirmarSenha: yup.string().required(),
+    dataNascimento: yup.date()
+})
 
 export default function Cadastro() {
     const [loading, setLoading] = useState(false);
-
-    const [form, setForm] = useState(
-        {
-            nome: '',
-            sobrenome: '',
-            email: '',
-            confirmarEmail: '',
-            cpf: '',
-            senha: '',
-            confirmarSenha: '',
-            dataNascimento: ''
-        });
-
-    const [error, setError] = useState(
-        {
-            nome: false,
-            sobrenome: false,
-            email: false,
-            confirmarEmail: false,
-            cpf: false,
-            senha: false,
-            confirmarSenha: false,
-            dataNascimento: false
-        }
-    );
-
-    useEffect(() => {
-        console.log(error)
-    }, [error])
-
-    const aoSalvar = (e) => {
-        e.preventDefault();
-
-        var regexText = /[^a-zà-ú]/gi; //regex de validacao de campo type text
-        var regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g // regex de valicao de campo type email
-
-
-        if (regexText.test(form.nome) || form.nome.length < 2 || !form.nome) {
-            console.log("error nome: " + error.nome)
-            setError((prevState) => ({...prevState, nome: true}));
-        }
-        if (!regexEmail.test(form.email)) { //se nao for um email valido
-            setError((prevState) => ({...prevState, email: true}));
-            console.log(error)
-        }
-        if (form.email !== form.confirmarEmail) {
-            setError((prevState) => ({...prevState, confirmarEmail: true}));
-        }
-        if (form.senha !== form.confirmarSenha) {
-            setError((prevState) => ({...prevState, confirmarSenha: true}));
-        }
-
-        setForm({
-            nome: '',
-            sobrenome: '',
-            email: '',
-            confirmarEmail: '',
-            cpf: '',
-            senha: '',
-            confirmarSenha: '',
-            dataNascimento: ''
-        })
-    }
+    const formik = useFormik({
+        initialValues: {
+            nome: "",
+            sobrenome: "",
+            email: "",
+            confirmarEmail: "",
+            cpf: "",
+            senha: "",
+            confirmarSenha: "",
+            dataNascimento: ""
+        },
+        onSubmit: (values)=>(
+            console.log(JSON.stringify(values))
+        ),
+        validationSchema: validationSchema
+    })
 
     return (
         <main className="cadastro-container">
             <section>
                 <h1>Dados pessoais</h1>
                 <h3>Preencha os campos do(a) aluno(a) que irá usar a plataforma</h3>
-                <form onSubmit={aoSalvar}>
+                <form onSubmit={formik.handleSubmit}>
                     <Stack
                         spacing={2}
                     >
@@ -88,74 +55,98 @@ export default function Cadastro() {
                             <TextField
                                 fullWidth
                                 label="Nome"
+                                id="nome"
+                                name="nome"
                                 type="text"
-                                value={form.nome}
-                                onChange={(e) => setForm({...form, nome: e.target.value})}
+                                value={formik.values.nome}
+                                onChange={formik.handleChange}
                                 variant='filled'
-                                error={error.nome}
-                                helperText={error.nome ? "Psiu, insira um nome válido" : ""}
+                                error={formik.touched.nome && Boolean(formik.errors.nome)}
+                                helperText={formik.touched.nome && formik.errors.nome}
                             />
                             <TextField
                                 fullWidth
                                 label="Sobrenome"
+                                id="sobrenome"
+                                name="sobrenome"
                                 type="text"
-                                value={form.sobrenome}
-                                onChange={(e) => setForm({...form, sobrenome: e.target.value})}
+                                value={formik.values.sobrenome}
+                                onChange={formik.handleChange}
                                 variant='filled'
-                                error={error.sobrenome}
+                                error={formik.touched.sobrenome && Boolean(formik.errors.sobrenome)}
+                                helperText={formik.touched.sobrenome && formik.errors.sobrenome}
                             />
                         </Stack>
                         <TextField
                             label="E-mail"
                             type="text"
-                            value={form.email}
-                            onChange={(e) => setForm({...form, email: e.target.value})}
+                            id="email"
+                            name="email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
                             variant='filled'
-                            error={error.email}
+                            error={formik.touched.email && Boolean(formik.errors.email)}
+                            helperText={formik.touched.email && formik.errors.email}
                         />
                         <TextField
                             label="Confirmar e-mail"
                             type="text"
-                            value={form.confirmarEmail}
-                            onChange={(e) => setForm({...form, confirmarEmail: e.target.value})}
+                            id="confirmarEmail"
+                            name="confirmarEmail"
+                            value={formik.values.confirmarEmail}
+                            onChange={formik.handleChange}
                             variant='filled'
-                            error={error.confirmarEmail}
+                            error={formik.touched.confirmarEmail && Boolean(formik.errors.confirmarEmail)}
+                            helperText={formik.touched.confirmarEmail && formik.errors.confirmarEmail}
                         />
                         <TextField
                             label="CPF"
-                            value={form.cpf}
-                            onChange={(e) => setForm({...form, cpf: e.target.value})}
+                            type="text"
+                            id="cpf"
+                            name="cpf"
+                            value={formik.values.cpf}
+                            onChange={formik.handleChange}
                             variant='filled'
-                            error={error.cpf}
+                            error={formik.touched.cpf && Boolean(formik.errors.cpf)}
+                            helperText={formik.touched.cpf && formik.errors.cpf}
                             inputProps={{ maxLength: 14 }}
 
                         />
                         <TextField
                             label="Senha"
                             type='password'
-                            value={form.senha}
-                            onChange={(e) => setForm({...form, senha: e.target.value})}
+                            id="senha"
+                            name="senha"
+                            value={formik.values.senha}
+                            onChange={formik.handleChange}
                             variant='filled'
-                            error={error.senha}
+                            error={formik.touched.senha && Boolean(formik.errors.senha)}
+                            helperText={formik.touched.senha && formik.errors.senha}
                         />
                         <TextField
                             label="Confirmar senha"
                             type='password'
-                            value={form.confirmarSenha}
-                            onChange={(e) => setForm({...form, confirmarSenha: e.target.value})}
+                            id="confirmarSenha"
+                            name="confirmarSenha"
+                            value={formik.values.confirmarSenha}
+                            onChange={formik.handleChange}
                             variant='filled'
-                            error={error.confirmarSenha}
+                            error={formik.touched.confirmarSenha && Boolean(formik.errors.confirmarSenha)}
+                            helperText={formik.touched.confirmarSenha && formik.errors.confirmarSenha}
                         />
                         <TextField
                             label="Data de Nascimento"
-                            value={form.dataNascimento}
-                            onChange={(e) => setForm({...form, dataNascimento: e.target.value})}
+                            id="dataNascimento"
+                            name="dataNascimento"
+                            value={formik.values.confirmarSenha}
+                            onChange={formik.handleChange}
                             variant='filled'
                             type='date'
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            error={error.dataNascimento}
+                            error={formik.touched.dataNascimento && Boolean(formik.errors.dataNascimento)}
+                            helperText={formik.touched.dataNascimento && formik.errors.dataNascimento}
                         />
                         <Stack
                             sx={{position: 'relative'}}

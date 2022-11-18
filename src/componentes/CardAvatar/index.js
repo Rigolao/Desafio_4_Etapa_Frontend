@@ -1,8 +1,6 @@
 import React from "react";
 import "./CardAvatar.css";
 import {Avatar, Paper, Stack, Typography} from "@mui/material";
-import LattesIcon from '../../imagens/lattes.svg'
-import IconButton from "@mui/material/IconButton";
 
 const CardAvatar = (props) => {
   return (
@@ -43,9 +41,6 @@ const CardAvatar = (props) => {
               direction='row'
               marginBottom='10px'
           >
-            <IconButton>
-              <img src={LattesIcon} alt='icone lattes'/>
-            </IconButton>
           </Stack>
         </Stack>
         <Typography>Tags: #Matemática, #Biologia
