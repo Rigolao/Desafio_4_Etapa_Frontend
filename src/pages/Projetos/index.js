@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react'
 import {
   Autocomplete,
   Button,
-  DialogTitle,
+  DialogTitle, FormControlLabel, FormLabel,
   Grid,
-  Paper,
+  Paper, Radio, RadioGroup,
   Stack,
   TextField,
   ToggleButton,
@@ -20,6 +20,8 @@ import DialogActions from "@mui/material/DialogActions";
 import * as yup from 'yup';
 import axios from "axios";
 import {useFormik} from "formik";
+import {postProjeto} from "../../componentes/Services/postProjeto";
+import moment from "moment/moment";
 
 
 const validationSchema = yup.object({
@@ -30,26 +32,19 @@ const validationSchema = yup.object({
 })
 
 const Projetos = () => {
-  const defaultProps = {
-    options: {formik},
-    getOptionLabel: (option) => option.title,
-  };
+
   const [projetos, setProjetos] = useState([])
   const [open, setOpen] = useState(false);
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState("true");
 
-  const handleAtivo = (event, newStatus) => {
-    if (newStatus !== null) {
-      setStatus(newStatus);
-    }
-    console.log(status);
-  }
+  const handleStatus = (event) => {
+    setStatus(event.target.value);
+  };
 
   useEffect(() => {
     const doFetch = async () => {
       axios
         .get("http://localhost:8081/projetos/meusProjetos", {
-          withCredentials: true,
           headers: {
             Authorization: sessionStorage.getItem('user')
           }
@@ -62,26 +57,27 @@ const Projetos = () => {
 
 
   const formik = useFormik({
+
     initialValues: {
       titulo: '',
       sobre: '',
       dataInicio: '',
       dataTermino: '',
-      publico: true,
+      publico: false,
     },
+
     validationSchema: validationSchema,
-    onSubmit: (values) => (
-      axios
-        .post("http://localhost:8081/projetos/cadastrarProjeto",values, {
-          withCredentials: true,
-          headers: {
-            Authorization: sessionStorage.getItem('user')
-          },
-        })
-        .then((response) => console.log(response.data))
-        .catch((error) => console.log(error))
-    )
+    onSubmit: (values) => {
+      values.dataInicio = moment(values.dataInicio, 'YYYY-MM-DD').format('DD/MM/YYYY')
+      values.dataTermino = moment(values.dataTermino, 'YYYY-MM-DD').format('DD/MM/YYYY')
+
+      FetchProjeto(values)
+    }
   })
+
+  const FetchProjeto = async (values) => {
+    await postProjeto (values)
+  }
 
   const handleClose = () => {
     formik.resetForm();
@@ -104,9 +100,9 @@ const Projetos = () => {
                padding='20px'
         >
           <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            sx={{ width: 300, color: 'tomato'}}
+            options={projetos.map((projeto) => projeto.titulo)}
+            freeSolo
+            sx={{ width: 300}}
             renderInput={(params) => <TextField {...params}  label="Pesquisar" />}
           />
 
@@ -179,16 +175,17 @@ const Projetos = () => {
                       error={formik.touched.dataTermino && Boolean(formik.errors.dataTermino)}
                       helperText={formik.touched.dataTermino && formik.errors.dataTermino}
                     />
-                    <Typography component='span' sx={{
-                      color:"rgba(0, 0, 0, 0.5)" }}>Público</Typography>
-                    <ToggleButtonGroup
-                      value={status}
-                      exclusive
-                      onChange={handleAtivo}
+                    <FormLabel id="demo-controlled-radio-buttons-group">Público</FormLabel>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={formik.values.publico}
+                      onChange={formik.handleChange}
                     >
-                      <ToggleButton value={true}>Ativo</ToggleButton>
-                      <ToggleButton value={false}>Inativo</ToggleButton>
-                    </ToggleButtonGroup>
+                      <FormControlLabel value={true} control={<Radio />} label="Ativo" />
+                      <FormControlLabel value={false} control={<Radio />} label="Inativo" />
+                    </RadioGroup>
                   </Stack>
                 </DialogContent>
                 <DialogActions>

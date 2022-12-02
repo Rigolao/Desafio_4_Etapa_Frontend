@@ -19,11 +19,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import {useFormik} from "formik";
-import axios from "axios";
 import * as yup from "yup";
 import SaveIcon from "@mui/icons-material/Save";
 import {useLocation} from "react-router-dom";
-
+import {editarProjeto} from "../Services/editarProjeto";
+import {deletarProjeto} from "../Services/deletarProjeto";
+import axios from "axios";
+import moment from "moment/moment";
 
 
 const validationSchema = yup.object({
@@ -34,6 +36,9 @@ const validationSchema = yup.object({
 })
 
 const CardProject = (props) => {
+
+  const FormtdataInicio = () => (props.dataInicio) = moment(props.dataInicio, 'DD/MM/YYYY').format('YYYY-MM-DD')
+
   const formik = useFormik({
     initialValues: {
       titulo: (props.titulo),
@@ -44,17 +49,22 @@ const CardProject = (props) => {
       idProjeto: (props.idProjeto)
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => (
-       axios
-        .put("http://localhost:8081/projetos/editarProjeto/"+(props.idProjeto),values, {
+    onSubmit: async (values) => {
+      values.dataInicio = moment(values.dataInicio, 'YYYY-MM-DD').format('DD/MM/YYYY')
+      values.dataTermino = moment(values.dataTermino, 'YYYY-MM-DD').format('DD/MM/YYYY')
+      try {
+        const resp = await axios.post("http://localhost:8081/projetos/cadastrarProjeto", {values}, {
           withCredentials: true,
           headers: {
             Authorization: sessionStorage.getItem('user')
           },
         })
-        .then((response) => console.log(response.data))
-        .catch((error) => console.log(error))
-    )
+        console.log(resp.data);
+      } catch (error) {
+        console.log(error.response)
+      }
+    }
+
   })
 
   const handleAtivo = (event, newStatus) => {
@@ -74,9 +84,13 @@ const CardProject = (props) => {
   const handClickOpen = () => {
     setOpen(true)
   }
+
+  const handClickDelete = async (values) => {
+    await deletarProjeto((props.idProjeto), values)
+  }
   const location = useLocation().pathname;
 
-    return (
+  return (
     <Box className="card-container" component={Paper} elevation={1}>
       <div className="top"></div>
 
@@ -86,21 +100,20 @@ const CardProject = (props) => {
           {props.sobre}
         </p>
         <div>
-        <div className="card-info-autor">
-          <h4>{props.nome}</h4>
-          <span>Autor(a)</span>
-          { location !=="/dashboard/todosProjetos" &&
-            <CardActions disableSpacing sx={{display: 'flex', justifyContent: 'end'}}>
-              <IconButton>
-                <EditIcon onClick={handClickOpen}/>
-              </IconButton>
-              <IconButton aria-label="share">
-                <DeleteIcon/>
-              </IconButton>
-            </CardActions>
-          }
-
-        </div>
+          <div className="card-info-autor">
+            <h4>{props.nome}</h4>
+            <span>Autor(a)</span>
+            {location !== "/dashboard/todosProjetos" &&
+              <CardActions disableSpacing sx={{display: 'flex', justifyContent: 'end'}}>
+                <IconButton>
+                  <EditIcon onClick={handClickOpen}/>
+                </IconButton>
+                <IconButton aria-label="share">
+                  <DeleteIcon onClick={handClickDelete}/>
+                </IconButton>
+              </CardActions>
+            }
+          </div>
         </div>
       </div>
 
@@ -168,7 +181,8 @@ const CardProject = (props) => {
                   helperText={formik.touched.dataTermino && formik.errors.dataTermino}
                 />
                 <Typography component='span' sx={{
-                  color:"rgba(0, 0, 0, 0.5)" }}>Público</Typography>
+                  color: "rgba(0, 0, 0, 0.5)"
+                }}>Público</Typography>
                 <ToggleButtonGroup
                   value={formik.values.publico}
                   exclusive
@@ -185,7 +199,7 @@ const CardProject = (props) => {
                 variant="contained"
                 type='submit'
                 startIcon={<SaveIcon/>}
-                     >Salvar</Button>
+              >Salvar</Button>
             </DialogActions>
           </form>
         </Paper>

@@ -34,7 +34,7 @@ const validationSchema = yup.object({
 
 function Login(props) {
     const [showPassword, setShowPassword] = useState(false);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     const handleClick = (e) => {
         setShowPassword(!showPassword);
@@ -50,7 +50,6 @@ function Login(props) {
             senha: ''
         },
         onSubmit: (values) => (
-
             nomeDaFuncao(values)
         ),
         validationSchema: validationSchema
@@ -58,7 +57,7 @@ function Login(props) {
     })
 
     const nomeDaFuncao = async (values) => {
-         await login (values)
+         await login (values, () => navigate("/dashboard"), () => setOpen(true))
     }
 
     return (
@@ -115,7 +114,7 @@ function Login(props) {
                                           }
                                           sx={{ mb: 2 }}
                                         >
-                                            Senha inválida!
+                                            Usuário e senha inválido!
                                         </Alert>
                                     </Collapse>
                                     <TextField

@@ -19,7 +19,8 @@ import AvatarIcon from "@mui/icons-material/AccountCircle";
 import PublicIcon from '@mui/icons-material/Public';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import LogoutIcon from '@mui/icons-material/Logout';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {logout} from "../Services/authService";
 
 
 export default (props) => {
@@ -97,9 +98,9 @@ export default (props) => {
                                     <ListItemText primary="Todos Cientista"/>
                                 </ListItemButton>
                             </LinkMUI>
-                            <LinkMUI component={Link} to="entrar" variant={"nav-link"}>
-                                <ListItemButton >
-                                    <ListItemIcon>
+                            <LinkMUI component={Link} to="/entrar" variant={"nav-link"}>
+                                <ListItemButton onClick={logout} >
+                                    <ListItemIcon >
                                         <LogoutIcon/>
                                     </ListItemIcon>
                                     <ListItemText primary="Sair"/>
