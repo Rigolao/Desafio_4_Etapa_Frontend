@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import "./Cadastro.css";
 import imagem from "../../imagens/cadastro.svg";
 import Center from "../../componentes/Center";
-import {Box, Button, CircularProgress, Stack, TextField} from "@mui/material";
+import {Box, Button, Stack, TextField} from "@mui/material";
 import ButtonLoading from "../../componentes/ButtonLoading";
 import * as yup from "yup";
 import {useFormik} from "formik";
-
+import axios from "axios";
 
 
 const validationSchema = yup.object({
@@ -24,17 +24,42 @@ export default function Cadastro() {
     const [loading, setLoading] = useState(false);
     const formik = useFormik({
         initialValues: {
-            nome: "",
-            sobrenome: "",
-            email: "",
-            confirmarEmail: "",
-            cpf: "",
-            senha: "",
-            confirmarSenha: "",
-            dataNascimento: ""
+            nome: '',
+            cpf: '',
+            dataNascimento: '',
+            email: '',
+            emailAlternativo: '',
+            lattes: '',
+            snh: '',
+            telefones: [
+                {
+                    ddd: '',
+                    numero: ''
+                }
+            ],
+            areaAtuacaoCientista: [
+                {
+                    nome: '',
+                }
+            ],
+            formacoes: [
+                {
+                    nome: '',
+                    dataInicio: '',
+                    dataTermino: ''
+                }
+            ],
+            redesSociais: [
+                {
+                    endereco: '',
+                    tipoRede: ''
+                }
+            ]
         },
         onSubmit: (values)=>(
-            console.log(JSON.stringify(values))
+            axios.post("http://localhost:8081/autorizacao/cadastro", {
+                values
+            }).then(res => console.log("deu certo")).catch(err=> console.log(err))
         ),
         validationSchema: validationSchema
     })

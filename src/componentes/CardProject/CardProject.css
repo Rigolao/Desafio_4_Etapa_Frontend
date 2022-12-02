@@ -5,15 +5,13 @@ body{
 }
 
 .card-container{
-  width: 260px;
+  width: 500px;
   height: 400px;
   background: #f3efef;
   border-radius: 20px;
-  border: 2px solid #6a5acd;
+  border-radius: 20px 20px 0 0;
 }
-.card-container:hover{
-  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-}
+
 .card-container Button{
   margin-top: 15px;
 }

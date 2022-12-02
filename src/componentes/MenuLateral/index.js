@@ -16,6 +16,9 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import FolderIcon from "@mui/icons-material/Folder";
 import AvatarIcon from "@mui/icons-material/AccountCircle";
+import PublicIcon from '@mui/icons-material/Public';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import LogoutIcon from '@mui/icons-material/Logout';
 import {Link, useLocation} from 'react-router-dom';
 
 
@@ -58,30 +61,48 @@ export default (props) => {
                     <Box flex={1}>
                         <List component="nav">
 
-                            <LinkMUI component={Link} to="inicial" variant={"nav-link"} >
-                                <ListItemButton selected={location === "/dashboard/inicial"}>
-                                    <ListItemIcon>
-                                        <HomeIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText primary="Página Inicial"/>
-                                </ListItemButton>
-                            </LinkMUI>
-
-                            <LinkMUI component={Link} to="projetos" variant={"nav-link"}>
-                                <ListItemButton selected={location === "/dashboard/projetos"}>
-                                    <ListItemIcon>
-                                        <FolderIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText primary="Projetos"/>
-                                </ListItemButton>
-                            </LinkMUI>
-
                             <LinkMUI component={Link} to="perfil" variant={"nav-link"}>
                                 <ListItemButton selected={location === "/dashboard/perfil"}>
                                     <ListItemIcon>
                                         <AvatarIcon/>
                                     </ListItemIcon>
                                     <ListItemText primary="Perfil"/>
+                                </ListItemButton>
+                            </LinkMUI>
+
+                            <LinkMUI component={Link} to="meusProjetos" variant={"nav-link"}>
+                                <ListItemButton selected={location === "/dashboard/meusProjetos"}>
+                                    <ListItemIcon>
+                                        <FolderIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Meus Projetos"/>
+                                </ListItemButton>
+                            </LinkMUI>
+
+                            <Divider/>
+
+                            <LinkMUI component={Link} to="todosProjetos" variant={"nav-link"}>
+                                <ListItemButton selected={location === "/dashboard/todosProjetos"}>
+                                    <ListItemIcon>
+                                        <PublicIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Todos Projetos"/>
+                                </ListItemButton>
+                            </LinkMUI>
+                            <LinkMUI component={Link} to="todosCientista" variant={"nav-link"} >
+                                <ListItemButton selected={location === "/dashboard/todosCientista"}>
+                                    <ListItemIcon>
+                                        <PersonSearchIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Todos Cientista"/>
+                                </ListItemButton>
+                            </LinkMUI>
+                            <LinkMUI component={Link} to="entrar" variant={"nav-link"}>
+                                <ListItemButton >
+                                    <ListItemIcon>
+                                        <LogoutIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Sair"/>
                                 </ListItemButton>
                             </LinkMUI>
                         </List>

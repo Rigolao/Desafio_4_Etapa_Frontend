@@ -1,52 +1,46 @@
+import {Avatar, Box, Stack, Typography} from "@mui/material";
 import React from "react";
-import "./CardAvatar.css";
-import {Avatar, Paper, Stack, Typography} from "@mui/material";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import './CardAvatar.css'
+import Paper from "@mui/material/Paper";
 
-const CardAvatar = (props) => {
+const Card = (props) => {
   return (
-      <Stack
-          maxWidth="230px"
-          height="300px"
-      >
-        <Stack
-            direction='column'
-            justifyContent='center'
-            alignItems='center'
-            component={Paper}
-            elevation={2}
-            sx={{backgroundColor: '#F2F2F2'}}
-        >
-          <Avatar
-              sx={{height: '100px', width: '100px', margin: '10px'}}
-          >JM</Avatar>
-          <Stack
+    <>
+      <Box className='card-container-avatar' component={Paper} elevation={1} >
+        <div className='top'>
+          <div className='imagem-container'>
+            <Avatar>JM</Avatar>
+          </div>
+        </div>
 
-          >
-            <Typography
-                color='#4136F1'
-                fontWeight='bold'
-            >
-              João Marques
-            </Typography>
-
-            <Typography
-                fontSize={12}
-                color='#595959'
-            >
-              Engenharia de Software
-            </Typography>
+        <div className="bottom">
+          <h3>{props.nome}</h3>
+          <Stack className="card-info-container" direction='column' spacing={1}>
+            <Stack className="card-info" spacing={1} direction='row'>
+              <span>Email: </span><Typography>{props.email}</Typography>
+            </Stack>
+            <Stack className="card-info" spacing={1} direction='row'>
+              <span>Telefone: </span><Typography>(16) 998864-6382}</Typography>
+            </Stack>
+            <Stack className="card-info" spacing={1} direction='row'>
+              <span>Area Atuação:</span><Typography>{props.areaAtuacaoCientista}</Typography>
+            </Stack>
+            <Stack className="card-info" spacing={1} direction='row'>
+              <span>Area Formação:</span><Typography>Array com varios objetos</Typography>
+            </Stack>
+            <Stack className="card-info" spacing={1} direction='row'>
+              <span>Lattes:</span><Typography>{props.lattes}</Typography>
+            </Stack>
+            <Stack className="card-info" spacing={1} direction='row'>
+              <span>Redes Sociais:</span><GitHubIcon/><LinkedInIcon/>
+            </Stack>
           </Stack>
+        </div>
 
-          <Stack
-              direction='row'
-              marginBottom='10px'
-          >
-          </Stack>
-        </Stack>
-        <Typography>Tags: #Matemática, #Biologia
-          #Matemática, #Biologia
-        </Typography>
-      </Stack>
+      </Box>
+    </>
   );
 };
-export default CardAvatar;
+export default Card;

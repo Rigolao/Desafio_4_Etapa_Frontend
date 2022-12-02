@@ -29,11 +29,8 @@ const validationSchema = yup.object({
   dataTermino: yup.string().required("Esse campo é obrigatório")
 })
 
-const Projetos = () => {
-  const defaultProps = {
-    options: {formik},
-    getOptionLabel: (option) => option.title,
-  };
+const TodosProjetos = () => {
+
   const [projetos, setProjetos] = useState([])
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState(true);
@@ -48,7 +45,7 @@ const Projetos = () => {
   useEffect(() => {
     const doFetch = async () => {
       axios
-        .get("http://localhost:8081/projetos/meusProjetos", {
+        .get("http://localhost:8081/projetos/todosProjetos", {
           withCredentials: true,
           headers: {
             Authorization: sessionStorage.getItem('user')
@@ -93,7 +90,7 @@ const Projetos = () => {
   return (
     <>
       <Stack marginLeft='30px' marginTop='20px'>
-        <Header titulo='Meus Projetos'/>
+        <Header titulo='Todos Projetos'/>
         <Stack component={Paper}
                width='100%'
                height='80px'
@@ -228,4 +225,4 @@ const Projetos = () => {
 }
 
 
-export default Projetos
+export default TodosProjetos;

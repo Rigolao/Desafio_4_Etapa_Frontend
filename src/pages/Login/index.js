@@ -1,5 +1,17 @@
 import React, {useState} from "react";
-import {Alert, Box, Button, InputAdornment, Link, Stack, styled, TextField, Typography, useTheme,} from "@mui/material";
+import {
+    Alert,
+    Box,
+    Button,
+    Collapse,
+    InputAdornment,
+    Link,
+    Stack,
+    styled,
+    TextField,
+    Typography,
+    useTheme,
+} from "@mui/material";
 import Center from "../../componentes/Center";
 import theme from "../../theme";
 import useViewport from "../../hooks/useViewport.js";
@@ -11,21 +23,18 @@ import imagem from "../../imagens/planeta.svg";
 import {useNavigate} from "react-router-dom";
 import {Formik, useFormik} from "formik";
 import * as yup from 'yup';
-
-function CloseIcon(props) {
-    return null;
-}
-
-CloseIcon.propTypes = {fontSize: PropTypes.string};
-
+import {login} from "../../componentes/Services/authService";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from '@mui/icons-material/Close';
 
 const validationSchema = yup.object({
-    cpf: yup.string().required("Esse campo é obrigatório").min(14, "CPF inválido"),
+    cpf: yup.string().required("Esse campo é obrigatório").min(11, "CPF inválido"),
     senha: yup.string().required("Esse campo é obrigatório")
 })
 
 function Login(props) {
     const [showPassword, setShowPassword] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleClick = (e) => {
         setShowPassword(!showPassword);
@@ -33,7 +42,7 @@ function Login(props) {
 
     const theme = useTheme();
 
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -41,11 +50,16 @@ function Login(props) {
             senha: ''
         },
         onSubmit: (values) => (
-            console.log(JSON.stringify(values))
+
+            nomeDaFuncao(values)
         ),
         validationSchema: validationSchema
+
     })
 
+    const nomeDaFuncao = async (values) => {
+         await login (values)
+    }
 
     return (
         <GridLayout>
@@ -84,6 +98,26 @@ function Login(props) {
                                     >
                                         Faça seu login
                                     </h1>
+                                    <Collapse in={open}>
+                                        <Alert
+                                          severity="error"
+                                          action={
+                                              <IconButton
+                                                aria-label="close"
+                                                color="inherit"
+                                                size="small"
+                                                onClick={() => {
+                                                    setOpen(false);
+                                                }}
+                                              >
+                                                  <CloseIcon fontSize="14px" />
+                                              </IconButton>
+                                          }
+                                          sx={{ mb: 2 }}
+                                        >
+                                            Senha inválida!
+                                        </Alert>
+                                    </Collapse>
                                     <TextField
                                         label="CPF"
                                         id="cpf"
@@ -145,7 +179,7 @@ function Login(props) {
                                             <Link
                                                 variant="ancora"
                                                 onClick={() => {
-                                                    Navigate("/cadastro");
+                                                    navigate("/cadastro");
                                                 }}
                                             >
                                                 Cadastra-se
