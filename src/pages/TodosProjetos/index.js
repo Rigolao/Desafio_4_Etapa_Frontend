@@ -90,7 +90,7 @@ const TodosProjetos = () => {
   return (
     <>
       <Stack marginLeft='30px' marginTop='20px'>
-        <Header titulo='Meus Projetos'/>
+        <Header titulo='Todos Projetos'/>
         <Stack component={Paper}
                width='100%'
                height='80px'

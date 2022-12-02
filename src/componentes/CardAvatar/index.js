@@ -5,7 +5,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import './CardAvatar.css'
 import Paper from "@mui/material/Paper";
 
-const Card = (props) => {
+const CardAvatar = (props) => {
   return (
     <>
       <Box className='card-container-avatar' component={Paper} elevation={1} >
@@ -22,13 +22,13 @@ const Card = (props) => {
               <span>Email: </span><Typography>{props.email}</Typography>
             </Stack>
             <Stack className="card-info" spacing={1} direction='row'>
-              <span>Telefone: </span><Typography>(16) 998864-6382}</Typography>
+              <span>Telefone: </span><Typography>{props.telefone}</Typography>
             </Stack>
             <Stack className="card-info" spacing={1} direction='row'>
               <span>Area Atuação:</span><Typography>{props.areaAtuacaoCientista}</Typography>
             </Stack>
             <Stack className="card-info" spacing={1} direction='row'>
-              <span>Area Formação:</span><Typography>Array com varios objetos</Typography>
+              <span>Area Formação:</span><Typography>{props.areaFormacao}</Typography>
             </Stack>
             <Stack className="card-info" spacing={1} direction='row'>
               <span>Lattes:</span><Typography>{props.lattes}</Typography>
@@ -43,4 +43,4 @@ const Card = (props) => {
     </>
   );
 };
-export default Card;
+export default CardAvatar;
