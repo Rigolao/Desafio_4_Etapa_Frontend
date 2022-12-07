@@ -2,7 +2,7 @@ import {
   Box,
   Button,
   CardActions,
-  DialogTitle,
+  DialogTitle, FormControlLabel, FormLabel, Radio, RadioGroup,
   Stack,
   TextField,
   ToggleButton,
@@ -26,6 +26,7 @@ import {editarProjeto} from "../Services/editarProjeto";
 import {deletarProjeto} from "../Services/deletarProjeto";
 import axios from "axios";
 import moment from "moment/moment";
+import DialogContentText from "@mui/material/DialogContentText";
 
 
 const validationSchema = yup.object({
@@ -37,23 +38,22 @@ const validationSchema = yup.object({
 
 const CardProject = (props) => {
 
-  const FormtdataInicio = () => (props.dataInicio) = moment(props.dataInicio, 'DD/MM/YYYY').format('YYYY-MM-DD')
-
   const formik = useFormik({
     initialValues: {
       titulo: (props.titulo),
       sobre: (props.sobre),
-      dataInicio: (props.dataInicio),
-      dataTermino: (props.dataTermino),
-      publico: (props.publico),
+      dataInicio: moment((props.dataInicio),"DD/MM/YYYY").format("YYYY-MM-DD"),
+      dataTermino: moment((props.dataTermino),"DD/MM/YYYY").format("YYYY-MM-DD"),
+      publico: (Boolean(props.publico)),
       idProjeto: (props.idProjeto)
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       values.dataInicio = moment(values.dataInicio, 'YYYY-MM-DD').format('DD/MM/YYYY')
       values.dataTermino = moment(values.dataTermino, 'YYYY-MM-DD').format('DD/MM/YYYY')
+      values.publico = Boolean(values.publico)
       try {
-        const resp = await axios.post("http://localhost:8081/projetos/cadastrarProjeto", {values}, {
+        const resp = await axios.put("http://localhost:8081/projetos/editarProjeto/"+values.idProjeto, values, {
           withCredentials: true,
           headers: {
             Authorization: sessionStorage.getItem('user')
@@ -77,18 +77,31 @@ const CardProject = (props) => {
 
   const [status, setStatus] = useState(true);
 
-  const handleClose = () => {
+  const [deleteDialog, setDeleteDialog] = useState(false)
+
+  const handleCloseForm = () => {
     formik.resetForm();
     setOpen(false)
   }
+  const handleOpenDelete = () => {
+    setDeleteDialog(true)
+  }
+  const handleCloseDelete = () => {
+    setDeleteDialog(false)
+  }
+
   const handClickOpen = () => {
     setOpen(true)
   }
 
-  const handClickDelete = async (values) => {
-    await deletarProjeto((props.idProjeto), values)
+  const handClickDelete = async () => {
+    await deletarProjeto((props.idProjeto)).then( () => {
+      handleCloseDelete()
+      return (props.apagarCallBack(true))
+    })
   }
   const location = useLocation().pathname;
+
 
   return (
     <Box className="card-container" component={Paper} elevation={1}>
@@ -109,7 +122,7 @@ const CardProject = (props) => {
                   <EditIcon onClick={handClickOpen}/>
                 </IconButton>
                 <IconButton aria-label="share">
-                  <DeleteIcon onClick={handClickDelete}/>
+                  <DeleteIcon onClick={handleOpenDelete}/>
                 </IconButton>
               </CardActions>
             }
@@ -119,7 +132,7 @@ const CardProject = (props) => {
 
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseForm}
         aria-labelledby="alert-dialog-title"
       >
         <Paper
@@ -128,7 +141,7 @@ const CardProject = (props) => {
             onSubmit={formik.handleSubmit}
           >
             <DialogTitle id="alert-dialog-title">
-              {"Cadastrar Projeto"}
+              {"Editar Projeto"}
 
             </DialogTitle>
             <DialogContent>
@@ -180,21 +193,21 @@ const CardProject = (props) => {
                   error={formik.touched.dataTermino && Boolean(formik.errors.dataTermino)}
                   helperText={formik.touched.dataTermino && formik.errors.dataTermino}
                 />
-                <Typography component='span' sx={{
-                  color: "rgba(0, 0, 0, 0.5)"
-                }}>Público</Typography>
-                <ToggleButtonGroup
+                <FormLabel id="demo-controlled-radio-buttons-group">Público</FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="publico"
                   value={formik.values.publico}
-                  exclusive
-                  onChange={handleAtivo}
+                  onChange={formik.handleChange}
                 >
-                  <ToggleButton value={true}>Ativo</ToggleButton>
-                  <ToggleButton value={false}>Inativo</ToggleButton>
-                </ToggleButtonGroup>
+                  <FormControlLabel value={true} control={<Radio />} label="Ativo" />
+                  <FormControlLabel value={false} control={<Radio />} label="Inativo" />
+                </RadioGroup>
               </Stack>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Cancelar</Button>
+              <Button onClick={handleCloseForm}>Cancelar</Button>
               <Button
                 variant="contained"
                 type='submit'
@@ -203,6 +216,23 @@ const CardProject = (props) => {
             </DialogActions>
           </form>
         </Paper>
+      </Dialog>
+      <Dialog
+        open={deleteDialog}
+        keepMounted
+        onClose={handleOpenDelete}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Delentando Projeto"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Tem certeza que deseja excluir o projeto {props.titulo} ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDelete}>Não</Button>
+          <Button onClick={handClickDelete}>Sim</Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );

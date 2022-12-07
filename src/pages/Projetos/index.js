@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {
+  Alert,
   Autocomplete,
   Button,
   DialogTitle, FormControlLabel, FormLabel,
-  Grid,
+  Grid, InputAdornment,
   Paper, Radio, RadioGroup,
   Stack,
   TextField,
@@ -22,6 +23,7 @@ import axios from "axios";
 import {useFormik} from "formik";
 import {postProjeto} from "../../componentes/Services/postProjeto";
 import moment from "moment/moment";
+import SearchIcon from '@mui/icons-material/Search';
 
 
 const validationSchema = yup.object({
@@ -35,13 +37,14 @@ const Projetos = () => {
 
   const [projetos, setProjetos] = useState([])
   const [open, setOpen] = useState(false);
-  const [status, setStatus] = useState("true");
+  const [alert, setAlert] = useState(false);
+  const [error, setError] = useState(false)
+  const [busca, setBusca] = useState('')
+  const [apagar, setApagar] = useState(false)
 
-  const handleStatus = (event) => {
-    setStatus(event.target.value);
-  };
 
   useEffect(() => {
+
     const doFetch = async () => {
       axios
         .get("http://localhost:8081/projetos/meusProjetos", {
@@ -53,7 +56,7 @@ const Projetos = () => {
         .catch((error) => console.log(error));
     }
     doFetch();
-  }, []);
+  }, [projetos]);
 
 
   const formik = useFormik({
@@ -70,26 +73,45 @@ const Projetos = () => {
     onSubmit: (values) => {
       values.dataInicio = moment(values.dataInicio, 'YYYY-MM-DD').format('DD/MM/YYYY')
       values.dataTermino = moment(values.dataTermino, 'YYYY-MM-DD').format('DD/MM/YYYY')
+      values.publico = Boolean(values.publico)
 
       FetchProjeto(values)
+      handleClose()
     }
   })
-
-  const FetchProjeto = async (values) => {
-    await postProjeto (values)
-  }
 
   const handleClose = () => {
     formik.resetForm();
     setOpen(false)
   }
+
+  const FetchProjeto = async (values) => {
+    await postProjeto (values).then(() => {
+      setAlert(true)
+    })
+      .catch(() => {
+        setError(true)
+      })
+  }
+
   const handClickOpen = () => {
     setOpen(true)
   }
+
+  const projetosFiltrados = projetos.filter((projeto) => projeto.titulo.startsWith(busca))
+
+  const projetoDeletado = (evet) => {
+    setApagar(evet)
+  }
+
   return (
     <>
       <Stack marginLeft='30px' marginTop='20px'>
         <Header titulo='Meus Projetos'/>
+        {alert && <Alert onClose={() => { setAlert(false)
+        }}>Projeto cadastrado com sucesso!</Alert>}
+        {error && <Alert severity="error" onClose={() => { setError(false)}}>Houve erro, tente cadastrar novamente mais tarde! </Alert> }
+        {apagar && <Alert>Projeto apagado com sucesso!</Alert>}
         <Stack component={Paper}
                width='100%'
                height='80px'
@@ -99,11 +121,13 @@ const Projetos = () => {
                marginBottom='20px'
                padding='20px'
         >
-          <Autocomplete
-            options={projetos.map((projeto) => projeto.titulo)}
-            freeSolo
-            sx={{ width: 300}}
-            renderInput={(params) => <TextField {...params}  label="Pesquisar" />}
+          <TextField
+            label="Pesquisar por titulo"
+            InputProps={{
+              endAdornment: <InputAdornment position='end'><SearchIcon/></InputAdornment>
+          }}
+            values={busca}
+            onChange={(ev) => setBusca(ev.target.value)}
           />
 
           <Button
@@ -114,6 +138,7 @@ const Projetos = () => {
           >
             Cadastro
           </Button>
+
           <Dialog
             open={open}
             onClose={handleClose}
@@ -179,7 +204,7 @@ const Projetos = () => {
                     <RadioGroup
                       row
                       aria-labelledby="demo-controlled-radio-buttons-group"
-                      name="controlled-radio-buttons-group"
+                      name="publico"
                       value={formik.values.publico}
                       onChange={formik.handleChange}
                     >
@@ -199,9 +224,10 @@ const Projetos = () => {
           </Dialog>
         </Stack>
 
+
         <Grid container spacing={6}>
           {
-            projetos.map((projeto) => {
+            projetosFiltrados.map((projeto) => {
               return (
                 <Grid item key={projeto.idProjeto}>
                   <CardProject
@@ -212,6 +238,7 @@ const Projetos = () => {
                     publico={projeto.publico}
                     dataTermino={projeto.dataTermino}
                     dataInicio={projeto.dataInicio}
+                    apagarCallBack={projetoDeletado}
                   />
                 </Grid>
               )

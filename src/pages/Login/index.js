@@ -1,24 +1,11 @@
 import React, {useState} from "react";
-import {
-    Alert,
-    Box,
-    Button,
-    Collapse,
-    InputAdornment,
-    Link,
-    Stack,
-    styled,
-    TextField,
-    Typography,
-    useTheme,
-} from "@mui/material";
+import {Alert, Box, Button, Collapse, InputAdornment, Link, Stack, styled, TextField, Typography,} from "@mui/material";
 import Center from "../../componentes/Center";
 import theme from "../../theme";
 import useViewport from "../../hooks/useViewport.js";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import ArrowRightAltOutlinedIcon from "@mui/icons-material/ArrowRightAltOutlined";
-import * as PropTypes from "prop-types";
 import imagem from "../../imagens/planeta.svg";
 import {useNavigate} from "react-router-dom";
 import {Formik, useFormik} from "formik";
@@ -32,15 +19,13 @@ const validationSchema = yup.object({
     senha: yup.string().required("Esse campo é obrigatório")
 })
 
-function Login(props) {
+function Login() {
     const [showPassword, setShowPassword] = useState(false);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const handleClick = (e) => {
         setShowPassword(!showPassword);
     };
-
-    const theme = useTheme();
 
     const navigate = useNavigate();
 
@@ -50,14 +35,16 @@ function Login(props) {
             senha: ''
         },
         onSubmit: (values) => (
-            nomeDaFuncao(values)
+          nomeDaFuncao(values)
         ),
         validationSchema: validationSchema
 
     })
 
     const nomeDaFuncao = async (values) => {
-         await login (values, () => navigate("/dashboard"), () => setOpen(true))
+         await login (values, () => navigate("/dashboard")).then(()=>{
+
+         })
     }
 
     return (

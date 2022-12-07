@@ -3,7 +3,7 @@ import {
   Autocomplete,
   Button, Card,
   DialogTitle,
-  Grid,
+  Grid, InputAdornment,
   Paper,
   Stack,
   TextField,
@@ -21,6 +21,7 @@ import * as yup from 'yup';
 import axios from "axios";
 import {useFormik} from "formik";
 import CardAvatar from "../../componentes/CardAvatar";
+import SearchIcon from "@mui/icons-material/Search";
 
 
 const validationSchema = yup.object({
@@ -33,6 +34,7 @@ const validationSchema = yup.object({
 const TodosProjetos = () => {
 
   const [cientistas, setCientistas] = useState([])
+  const [busca, setBusca] = useState('')
 
   useEffect(() => {
     const doFetch = async () => {
@@ -49,6 +51,8 @@ const TodosProjetos = () => {
     doFetch();
   }, []);
 
+  const cientistasFiltrados = cientistas.filter((cientista) => cientista.nome.startsWith(busca))
+
   return (
     <>
       <Stack marginLeft='30px' marginTop='20px'>
@@ -63,22 +67,42 @@ const TodosProjetos = () => {
                padding='20px'
         >
           <TextField
-            id="combo-box-demo"
-            label="Pesquisar"
+            label="Pesquisar por cientista"
+            InputProps={{
+              endAdornment: <InputAdornment position='end'><SearchIcon/></InputAdornment>
+            }}
+            values={busca}
+            onChange={(ev) => setBusca(ev.target.value)}
           />
+
 
         </Stack>
 
         <Grid container spacing={6}>
-          <Grid item>
-            <CardAvatar
-            nome="João Marques"
-            email="joao@unaerp.br"
-            telefone="(16) 9988646382"
-            areaAtuacaoCientista="Desenvolvedor Front-End"
-            areaFormacao="Engenharia de Software"
-            lattes="32132913"/>
-          </Grid>
+          {
+            cientistasFiltrados.map((cientista) => {
+              const areaAtuacaoCientista = cientista.areaAtuacaoCientista != null ? cientista.areaAtuacaoCientista.map((nome) => nome.nome) : ''
+              const formacao = cientista.formacoes != null ? cientista.formacoes.map((formacoes) => formacoes.nome) : ''
+              const ddd = cientista.telefones != null ? cientista.telefones.map((telefone) => telefone.ddd) : ''
+              const telefone = cientista.telefones != null ? cientista.telefones.map((telefone) => telefone.numero) : ''
+              const redeSociais = cientista.redesSociais != null ? cientista.redesSociais.map((redeSociais) => redeSociais.tipoRede) : ''
+              return (
+                <Grid item key={cientista.id}>
+                  <CardAvatar
+                    avatar={cientista.nome.substr(0,1)}
+                    nome={cientista.nome}
+                    email={cientista.email}
+                    ddd = {ddd == '' ? 'Nenhuma' : ddd == 1 ? ddd : ddd.join(", ")}
+                    telefone={telefone == '' ? 'Nenhuma' : telefone == 1 ? telefone : telefone.join(", ")}
+                    areaAtuacaoCientista={areaAtuacaoCientista == '' ? 'Nenhuma' : areaAtuacaoCientista == 1 ? areaAtuacaoCientista : areaAtuacaoCientista.join(", ")}
+                    areaFormacao={formacao == '' ? 'Nenhuma' : formacao == 1 ? formacao : formacao.join(", ")}
+                    lattes={cientista.lattes}
+                    redesSociais={redeSociais == '' ? 'Nenhuma' : redeSociais == 1 ? redeSociais : redeSociais.join(", ")}
+                  />
+                </Grid>
+              )
+            })
+          }
         </Grid>
       </Stack>
     </>

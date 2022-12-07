@@ -11,7 +11,7 @@ const CardAvatar = (props) => {
       <Box className='card-container-avatar' component={Paper} elevation={1} >
         <div className='top'>
           <div className='imagem-container'>
-            <Avatar>JM</Avatar>
+            <Avatar>{props.avatar}</Avatar>
           </div>
         </div>
 
@@ -22,7 +22,7 @@ const CardAvatar = (props) => {
               <span>Email: </span><Typography>{props.email}</Typography>
             </Stack>
             <Stack className="card-info" spacing={1} direction='row'>
-              <span>Telefone: </span><Typography>{props.telefone}</Typography>
+              <span>Telefone: </span><Typography>({props.ddd}) {props.telefone}</Typography>
             </Stack>
             <Stack className="card-info" spacing={1} direction='row'>
               <span>Area Atuação:</span><Typography>{props.areaAtuacaoCientista}</Typography>
@@ -34,7 +34,7 @@ const CardAvatar = (props) => {
               <span>Lattes:</span><Typography>{props.lattes}</Typography>
             </Stack>
             <Stack className="card-info" spacing={1} direction='row'>
-              <span>Redes Sociais:</span><GitHubIcon/><LinkedInIcon/>
+              <span>Redes Sociais:</span> <Typography>{props.redesSociais > 1 ? props.redesSociais.forEach((rede) => rede == 'G' ? <GitHubIcon/> : rede == 'L'? <LinkedInIcon/> : '') : ''}</Typography>
             </Stack>
           </Stack>
         </div>
