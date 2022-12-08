@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 const CardAvatar = (props) => {
   return (
     <>
-      <Box className='card-container-avatar' component={Paper} elevation={1} >
+      <Box className="card-contaier-avatar" component={Paper} elevation={1} >
         <div className='top'>
           <div className='imagem-container'>
             <Avatar>{props.avatar}</Avatar>
