@@ -24,6 +24,7 @@ import {useFormik} from "formik";
 import {postProjeto} from "../../componentes/Services/postProjeto";
 import moment from "moment/moment";
 import SearchIcon from '@mui/icons-material/Search';
+import {getProjeto} from "../../componentes/Services/getProjeto";
 
 
 const validationSchema = yup.object({
@@ -56,7 +57,7 @@ const Projetos = () => {
         .catch((error) => console.log(error));
     }
     doFetch();
-  }, [projetos]);
+  }, []);
 
 
   const formik = useFormik({
@@ -77,6 +78,17 @@ const Projetos = () => {
 
       FetchProjeto(values)
       handleClose()
+      const doFetch = async () => {
+        axios
+          .get("http://localhost:8081/projetos/meusProjetos", {
+            headers: {
+              Authorization: sessionStorage.getItem('user')
+            }
+          })
+          .then((response) => setProjetos(response.data))
+          .catch((error) => console.log(error));
+      }
+      doFetch();
     }
   })
 
@@ -102,6 +114,9 @@ const Projetos = () => {
 
   const projetoDeletado = (evet) => {
     setApagar(evet)
+  }
+  const atualizarPagina = () => {
+    getProjeto()
   }
 
   return (
@@ -239,6 +254,8 @@ const Projetos = () => {
                     dataTermino={projeto.dataTermino}
                     dataInicio={projeto.dataInicio}
                     apagarCallBack={projetoDeletado}
+                    atualizarPagina={atualizarPagina}
+
                   />
                 </Grid>
               )

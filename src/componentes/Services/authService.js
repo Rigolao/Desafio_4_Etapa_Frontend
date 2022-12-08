@@ -11,6 +11,7 @@ const login = ({cpf, senha}, callBack) => {
     })
     .then((response) => {
       sessionStorage.setItem("user", response.data);
+      sessionStorage.setItem("cpf", cpf)
       callBack()
 
     })
@@ -21,6 +22,7 @@ const login = ({cpf, senha}, callBack) => {
 
 const logout = () => {
   sessionStorage.removeItem("user")
+  sessionStorage.removeItem("cpf")
 }
 
 export {login, logout};

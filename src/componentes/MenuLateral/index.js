@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./MenuLateral.css";
 import {
     Avatar,
@@ -21,6 +21,7 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {logout} from "../Services/authService";
+import axios from "axios";
 
 
 export default (props) => {
@@ -28,6 +29,23 @@ export default (props) => {
     const smDown = useMediaQuery(theme.breakpoints.down("sm")); //Se eu entrar na condição menor que x tamnho retorna true
 
     const location = useLocation().pathname;
+
+    const [cientista, setCientista] = useState([])
+
+    useEffect(() => {
+        const doFetch = async () => {
+            axios
+              .get("http://localhost:8081/cientistas/retornaPerfil/" + sessionStorage.getItem("cpf"), {
+                  withCredentials: true,
+                  headers: {
+                      Authorization: sessionStorage.getItem('user')
+                  }
+              })
+              .then((response) => setCientista(response.data))
+              .catch((error) => console.log(error));
+        }
+        doFetch();
+    }, []);
 
     return (
         <>
@@ -53,8 +71,8 @@ export default (props) => {
                         <Avatar
                             component={Link} to="/perfil"
                             sx={{height: theme.spacing(12), width: theme.spacing(12), marginTop: theme.spacing(2)}}
-                        >JM</Avatar>
-                        <h4>João Marques</h4>
+                        ></Avatar>
+                        <h4>{cientista.nome}</h4>
                     </Box>
 
                     <Divider/>

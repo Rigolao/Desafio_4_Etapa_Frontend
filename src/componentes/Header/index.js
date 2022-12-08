@@ -14,7 +14,7 @@ const Header = (props) => {
             {smDown && <IconButton sx={{marginRight:'10px'}}>
                 <MenuIcon/>
             </IconButton>}
-            <h1>{props.titulo}</h1>
+            <h1>{props.titulo}{props.autor}</h1>
         </Stack>
     );
 }

@@ -27,6 +27,7 @@ import {deletarProjeto} from "../Services/deletarProjeto";
 import axios from "axios";
 import moment from "moment/moment";
 import DialogContentText from "@mui/material/DialogContentText";
+import {getProjeto} from "../Services/getProjeto";
 
 
 const validationSchema = yup.object({
@@ -63,6 +64,7 @@ const CardProject = (props) => {
       } catch (error) {
         console.log(error.response)
       }
+
     }
 
   })
@@ -99,6 +101,7 @@ const CardProject = (props) => {
       handleCloseDelete()
       return (props.apagarCallBack(true))
     })
+    props.atualizarPagina()
   }
   const location = useLocation().pathname;
 
