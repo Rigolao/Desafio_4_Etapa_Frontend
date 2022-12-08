@@ -42,6 +42,7 @@ const Projetos = () => {
   const [error, setError] = useState(false)
   const [busca, setBusca] = useState('')
   const [apagar, setApagar] = useState(false)
+  const [edit, setEdit] = useState(false)
 
 
   useEffect(() => {
@@ -115,6 +116,9 @@ const Projetos = () => {
   const projetoDeletado = (evet) => {
     setApagar(evet)
   }
+  const projetoEditado = (evet) => {
+    setEdit(evet)
+  }
   const atualizarPagina = () => {
     const doFetch = async () => {
       axios
@@ -136,7 +140,8 @@ const Projetos = () => {
         {alert && <Alert onClose={() => { setAlert(false)
         }}>Projeto cadastrado com sucesso!</Alert>}
         {error && <Alert severity="error" onClose={() => { setError(false)}}>Houve erro, tente cadastrar novamente mais tarde! </Alert> }
-        {apagar && <Alert>Projeto apagado com sucesso!</Alert>}
+        {apagar && <Alert onClose={() => { setApagar(false)}}> Projeto apagado com sucesso!</Alert>}
+        {edit && <Alert onClose={() => { setEdit(false)}}> Projeto editado com sucesso!</Alert>}
         <Stack component={Paper}
                width='100%'
                height='80px'
@@ -265,8 +270,10 @@ const Projetos = () => {
                     dataInicio={projeto.dataInicio}
                     apagarCallBack={projetoDeletado}
                     atualizarPagina={atualizarPagina}
+                    projetoEditado = {projetoEditado}
 
-                  />
+
+                    />
                 </Grid>
               )
             })

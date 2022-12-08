@@ -60,11 +60,12 @@ const CardProject = (props) => {
             Authorization: sessionStorage.getItem('user')
           },
         })
-        console.log(resp.data);
+        props.atualizarPagina()
+        handleCloseForm()
+        props.projetoEditado(true)
       } catch (error) {
         console.log(error.response)
       }
-
     }
 
   })
