@@ -157,19 +157,15 @@ function Login() {
                                         >
                                             Entrar
                                         </Button>
-                                        <Link variant="ancora">Esqueci minha senha</Link>
-                                    </Stack>
-                                    <Stack spacing={6}>
                                         <Typography style={{fontSize: "12px", textAlign: "left"}}>
                                             <strong>Não tem uma conta? </strong>
                                             <Link
-                                                variant="ancora"
-                                                onClick={() => {
-                                                    navigate("/cadastro");
-                                                }}
+                                              variant="ancora"
+                                              onClick={() => {
+                                                  navigate("/cadastro");
+                                              }}
                                             >
                                                 Cadastra-se
-                                                <ArrowRightAltOutlinedIcon/>
                                             </Link>
                                         </Typography>
                                     </Stack>
