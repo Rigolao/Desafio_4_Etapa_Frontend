@@ -116,7 +116,17 @@ const Projetos = () => {
     setApagar(evet)
   }
   const atualizarPagina = () => {
-    getProjeto()
+    const doFetch = async () => {
+      axios
+        .get("http://localhost:8081/projetos/meusProjetos", {
+          headers: {
+            Authorization: sessionStorage.getItem('user')
+          }
+        })
+        .then((response) => setProjetos(response.data))
+        .catch((error) => console.log(error));
+    }
+    doFetch();
   }
 
   return (
